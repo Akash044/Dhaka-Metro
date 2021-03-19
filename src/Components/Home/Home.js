@@ -1,21 +1,26 @@
-import { Button } from 'react-bootstrap';
-import React from 'react';
+import { Button, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css'
+import fakeData from '../../Data/fakeData.json'
+import Tickets from '../Ticket/Tickets';
 
 const Home = () => {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        setData(fakeData);
+    }, [])
     return (
+        <div className="home-page">
+            <div className="row justify-content-center">
+                {
+                    data.map(element => <Tickets key={element.id} info={element}></Tickets>)
+                }
 
-        <div>
-           
-            <Button as={Link} to="/route" className="btn btn-success me-4"> 500</Button>
-            <Button as={Link} to="/route" className="btn btn-info me-4"> 500</Button>
-            <Button as={Link} to="/route" className="btn btn-danger me-4"> 500</Button>
-            <Button as={Link} to="/route" className="btn btn-warning me-4"> 500</Button>
-            
-
+            </div>
         </div>
-    )    
+
+    )
 };
 
 export default Home;

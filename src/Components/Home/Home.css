@@ -1,3 +1,9 @@
-.home{
-    background-image: url("https://i.pinimg.com/originals/2f/0a/b3/2f0ab3d746e7d537422631a178285898.png");
-}
+.home-page{
+  margin-right: 0;
+    height: 750px;
+    background-image: url("../../images/Dhaka-Metro.jpg");
+    background-attachment: fixed;  
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }

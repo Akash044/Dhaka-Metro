@@ -1,0 +1,25 @@
+[{
+    "id": 1,
+    "img":"https://i.ibb.co/qnx7Pxb/ticket.png" ,
+    "type": "ONE TIME TICKET",
+    "price": 100,
+    "info": "Eare"
+  }, {
+    "id": 2,
+    "img":"https://i.ibb.co/qnx7Pxb/ticket.png" ,
+    "type": "ONE DAY PASS",
+    "price": 500,
+    "info": "Gigaclub"
+  }, {
+    "id": 3,
+    "img":"https://i.ibb.co/qnx7Pxb/ticket.png" ,
+    "type": "MONTLY PASS",
+    "price": 1500,
+    "info": "Feedmix"
+  }, {
+    "id": 4,
+    "img":"https://i.ibb.co/qnx7Pxb/ticket.png" ,
+    "type": "ANNUAL PASS",
+    "price": 9000,
+    "info": "Topicstorm"
+  }]
