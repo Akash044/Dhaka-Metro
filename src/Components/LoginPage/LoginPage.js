@@ -3,13 +3,11 @@ import React from 'react';
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../../firebase.config"
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faGoogle } from '@fortawesome/fontawesome-free-brands';
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
@@ -29,7 +27,7 @@ const LoginPage = () => {
 
     const history = useHistory();
     const location = useLocation();
-    let { from } = location.state || { from: { pathname: "/route" } };
+    let { from } = location.state || { from: { pathname: "/" } };
 
 
     const handleGoogleSignIn = () => {
@@ -39,10 +37,10 @@ const LoginPage = () => {
                 const user1 = result.user;
                 setLoggedUser(user1);
                 history.replace(from);
-                console.log(loggedUser);
+                // console.log(loggedUser);
             }).catch((error) => {
                 const errorMessage = error.message;
-                console.log(errorMessage);
+                // console.log(errorMessage);
             });
 
     }
@@ -51,30 +49,31 @@ const LoginPage = () => {
         setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
     }
     const handleSignUpWithEmailAndPassword = () => {
-        console.log(userInfo);
+        // console.log(userInfo);
         firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((userCredential) => {
                 var user = userCredential.user;
-                console.log("user create ", user);
+                // console.log("user create ", user);
             })
             .catch((error) => {
                 var errorMessage = error.message;
-                console.log(errorMessage);
+                // console.log(errorMessage);
             });
 
     }
     const handleSignInWithEmailAndPassword = () => {
-        console.log(userInfo);
+        // console.log(userInfo);
         firebase.auth().signInWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((userCredential) => {
                 var user = userCredential.user;
                 setLoggedUser(user);
+                // console.log(from);
                 history.replace(from);
-                console.log("sign in successfully", user);
+                // console.log("sign in successfully", user);
             })
             .catch((error) => {
                 var errorMessage = error.message;
-                console.log(errorMessage);
+                // console.log(errorMessage);
             });
 
     }

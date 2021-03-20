@@ -1,6 +1,6 @@
 import './Header.css'
 import React, { useContext } from 'react';
-import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import navImg from "../../images/header-logo.png";
@@ -8,7 +8,7 @@ import navImg from "../../images/header-logo.png";
 const Header = () => {
     const [loggedUser, setLoggedUser] = useContext(UserContext);
     let history = useHistory();
-    console.log("app ", loggedUser);
+    // console.log("app ", loggedUser);
     const handleLogOut = () => {
         setLoggedUser({});
         history.push("/")
