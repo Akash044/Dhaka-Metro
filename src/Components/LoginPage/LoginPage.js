@@ -11,9 +11,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/fontawesome-free-brands';
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { useForm } from "react-hook-form";
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 
 const LoginPage = () => {
+    const { register, handleSubmit, watch, errors } = useForm();
+
+
     const provider = new firebase.auth.GoogleAuthProvider();
     const [loggedUser, setLoggedUser] = useContext(UserContext);
 
@@ -22,7 +26,10 @@ const LoginPage = () => {
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: "",
+        successMessage: "",
+        errorMessage: ""
     })
 
     const history = useHistory();
@@ -48,16 +55,22 @@ const LoginPage = () => {
         console.log(event.target.name, event.target.value);
         setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
     }
-    const handleSignUpWithEmailAndPassword = () => {
-        // console.log(userInfo);
+    const handleSignUpWithEmailAndPassword = (data) => {
+        console.log("clicked");
         firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((userCredential) => {
-                var user = userCredential.user;
-                // console.log("user create ", user);
+                const user = userCredential.user;
+                const newUserInfo = { ...userInfo };
+                newUserInfo.errorMessage = "";
+                newUserInfo.successMessage = "Account is successfully created! Go to login page"
+                setUserInfo(newUserInfo);
+                console.log("user create ", user);
             })
             .catch((error) => {
-                var errorMessage = error.message;
-                // console.log(errorMessage);
+                const newUserInfo = { ...userInfo };
+                newUserInfo.successMessage = "";
+                newUserInfo.errorMessage = error.message;
+                setUserInfo(newUserInfo);
             });
 
     }
@@ -65,14 +78,14 @@ const LoginPage = () => {
         // console.log(userInfo);
         firebase.auth().signInWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((userCredential) => {
-                var user = userCredential.user;
+                const user = userCredential.user;
                 setLoggedUser(user);
                 // console.log(from);
                 history.replace(from);
                 // console.log("sign in successfully", user);
             })
             .catch((error) => {
-                var errorMessage = error.message;
+                const errorMessage = error.message;
                 // console.log(errorMessage);
             });
 
@@ -81,30 +94,49 @@ const LoginPage = () => {
     return (<div className="p-5 bg">
         <Card className="mx-auto mt-5 ps-3 shadow" style={{ width: '18rem' }}>
             <Card.Body className="" >
-                {
-                    (!logState) ?
-                        <>
-                            <Card.Title>Create an account</Card.Title>
-                            <input type="text" name="name" className="mt-2" onBlur={handleOnChange} placeholder="Enter your name" />
-                            <input type="email" name="email" className="mt-3" onBlur={handleOnChange} placeholder="Enter your email" />
-                            <input type="password" name="password" className="mt-3" onBlur={handleOnChange} placeholder="Choose password" />
-                            <input type="password" className="mt-3" placeholder="Confirm password" />
-                        </>
-                        :
-                        <>
-                            <Card.Title>Sign in</Card.Title>
-                            <input type="email" name="email" onBlur={handleOnChange} className="mt-3" placeholder="Enter your email" />
-                            <input type="password" name="password" onBlur={handleOnChange} className="mt-3" placeholder="Choose password" />
-                        </>
+                <form onSubmit={handleSubmit(!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword)} className="m-2">
+                    {
+                        (!logState) ?
+                            <>
+                                <Card.Title>Create an account</Card.Title>
+                                <input name="name" placeholder="Enter name" className="mt-2" onBlur={handleOnChange} ref={register} />
+                                <input name="email" placeholder="Enter email" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\S+@\S+\.\S+/ })} /><br />
+                                {errors.email && <span className="text-danger">Enter valid email</span>}
+                                <input type="password" name="password" placeholder="Enter password" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, minLength: 6, pattern: /\d{1}/ })} /><br />
+                                {errors.password && <span className="text-danger">Enter atleast one digit(minlength 6)</span>}
+                                <input type="password" name="confirmPassword" placeholder="confirmPassword" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, minLength: 6 })} /><br />
+                                {errors.confirmPassword && <span className="text-danger">Doesn't match</span>}<br />
+
+                            </>
+                            :
+                            <>
+                                <Card.Title>Sign in</Card.Title>
+                                <input name="email" placeholder="Enter email" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\S+@\S+\.\S+/ })} />
+                                <br />
+                                {errors.email && <span className="text-danger">Enter valid email</span>}
+                                <input type="password" name="password" placeholder="Enter password" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\d{1}/ })} /><br />
+                                {errors.password && <span className="text-danger">Enter atleast one digit(minlength 6)</span>}<br />
+                            </>
 
 
-                }
+                    }
+                    {/* <input type="submit" className="bg-primary text-white rounded m-2" onClick={!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword} /> */}
+                    <Button type="submit" className="mt-4" onClick={!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword} >{logState ? "Sign in" : "sign up"}</Button>
+                </form>
+                <Card.Text>{!logState ? "Already have an account?" : "Didn't have an account?"}<Link onClick={() => {
+                    setLogState(!logState);
+                    const newUserInfo = { ...userInfo };
+                    newUserInfo.successMessage = "";
+                    newUserInfo.errorMessage = "";
+                    setUserInfo(newUserInfo);
+                }}>{!logState ? "Sign in" : "sign up"}</Link></Card.Text>
+                <h5 className="bg-success rounded text-white">{userInfo.successMessage} </h5>
+                <h5 className="bg-warning rounded text-dark">{userInfo.errorMessage}</h5>
 
-                <Button type="submit" className="mt-4" onClick={!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword} >{logState ? "Sign in" : "sign up"}</Button>
-                <Card.Text>{!logState ? "Already have an account?" : "Didn't have an account?"}<Link onClick={() => setLogState(!logState)}>{!logState ? "Sign in" : "sign up"}</Link></Card.Text>
             </Card.Body>
         </Card>
         <div className="d-flex justify-content-center mt-4">
+
             <Button onClick={handleGoogleSignIn}> <FontAwesomeIcon className='font-awesome me-2' icon={faGoogle} />Continue with Google</Button>
         </div>
     </div>
