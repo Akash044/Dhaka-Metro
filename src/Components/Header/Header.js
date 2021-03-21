@@ -18,13 +18,7 @@ const Header = () => {
     return (
 
         <Navbar className="container bg-white" expand="lg">
-            <Navbar.Brand as={Link} to="/home"><img
-                src={navImg}
-                width="100"
-                height="50"
-                className="d-inline-block align-top"
-                alt="React Bootstrap logo"
-            /></Navbar.Brand>
+            <Navbar.Brand as={Link} to="/home"><img src={navImg} className="d-inline-block align-top nav-img"alt=""/></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav.Link as={Link} to="/home">Home</Nav.Link>

@@ -3,7 +3,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 const mapStyles = {
   width: '95%',
-  height: '98%'
+  height: '98%',
 };
 
 export class GoogleMap extends Component {

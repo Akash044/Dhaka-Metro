@@ -9,7 +9,6 @@ import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/fontawesome-free-brands';
-import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
@@ -31,8 +30,6 @@ const LoginPage = () => {
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
-    console.log(from);
-
 
     const handleGoogleSignIn = () => {
         firebase.auth()
@@ -41,27 +38,20 @@ const LoginPage = () => {
                 const user1 = result.user;
                 setLoggedUser(user1);
                 history.replace(from);
-                // console.log(loggedUser);
-            }).catch((error) => {
-                // const errorMessage = error.message;
-                // console.log(errorMessage);
-            });
-
+            }).catch(() => { });
     }
+
     const handleOnChange = (event) => {
-        console.log(event.target.name, event.target.value);
         setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
     }
-    const handleSignUpWithEmailAndPassword = (data) => {
-        // console.log("clicked");
+    
+    const handleSignUpWithEmailAndPassword = () => {
         firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
+            .then(() => {
                 const newUserInfo = { ...userInfo };
                 newUserInfo.errorMessage = "";
-                newUserInfo.successMessage = "Account is successfully created! Go to login page"
+                newUserInfo.successMessage = "Account is successfully created! Click sign in"
                 setUserInfo(newUserInfo);
-                console.log("user create ", user);
             })
             .catch((error) => {
                 const newUserInfo = { ...userInfo };
@@ -69,8 +59,8 @@ const LoginPage = () => {
                 newUserInfo.errorMessage = error.message;
                 setUserInfo(newUserInfo);
             });
-
     }
+
     const handleSignInWithEmailAndPassword = () => {
         firebase.auth().signInWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((userCredential) => {
@@ -78,7 +68,7 @@ const LoginPage = () => {
                 setLoggedUser(user);
                 const newUserInfo = { ...userInfo };
                 newUserInfo.errorMessage = "";
-                newUserInfo.successMessage = "Account is successfully created! Go to login page"
+                newUserInfo.successMessage = "Account is successfully created! Click sign in"
                 setUserInfo(newUserInfo);
                 history.replace(from);
             })
@@ -90,7 +80,7 @@ const LoginPage = () => {
             });
 
     }
-
+  
     return (<div className="p-5 bg">
         <Card className="mx-auto mt-5 shadow" style={{ width: '16rem' }}>
             <Card.Body className="" >
@@ -114,15 +104,14 @@ const LoginPage = () => {
                                 <input name="email" placeholder="Enter email" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\S+@\S+\.\S+/ })} />
                                 <br />
                                 {errors.email && <span className="text-danger">Enter valid email</span>}
-                                <input type="password" name="password" placeholder="Enter password" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\d{1}/ })} /><br />
+                                <input type="password" name="password" placeholder="Enter password" className="mt-2" onBlur={handleOnChange} ref={register({ required: true, pattern: /\d{1}/ })} />
+                                <br />
                                 {errors.password && <span className="text-danger">Required</span>}<br />
                             </>
 
 
                     }
-                    <input type="submit" className="bg-primary text-white rounded m-2"/> 
-                     {/* onClick={!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword} />  */}
-                    {/* <Button type="submit" className="mt-4" onClick={!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword} >{logState ? "Sign in" : "sign up"}</Button> */}
+                    <input type="submit" className="bg-primary text-white rounded m-2" />
                 </form>
                 <Card.Text>{!logState ? "Already have an account?" : "Didn't have an account?"}<button className="btn info text-primary" onClick={() => {
                     setLogState(!logState);
