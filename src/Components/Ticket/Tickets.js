@@ -13,7 +13,7 @@ const Tickets = (props) => {
             <Card.Body>
                 <h3>{type}</h3>
                 <h5><img className="icon" src={tkIcon} alt=""/> {price}</h5>
-                <Button className="buy-btn" as={Link} to={`/route/${id}`} variant="primary">Buy Now</Button>
+                <Link to={`/route/${id}`}> <Button className="buy-btn"  variant="primary">Buy Now</Button> </Link>
             </Card.Body>
         </Card>
     );

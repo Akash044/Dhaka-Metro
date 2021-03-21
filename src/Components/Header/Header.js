@@ -4,6 +4,7 @@ import { Button, Nav, Navbar } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import navImg from "../../images/header-logo.png";
+import userIcon from '../../images/empty-img-icon.png'
 
 const Header = () => {
     const [loggedUser, setLoggedUser] = useContext(UserContext);
@@ -30,12 +31,9 @@ const Header = () => {
                 <Nav.Link as={Link} to="/route">Destination</Nav.Link>
                 <Nav.Link href="#pricing">Blog</Nav.Link>
                 <Nav.Link href="#pricing">Contact</Nav.Link>
-                    <Navbar.Brand> <img src={loggedUser.photoURL}
-                        width="50"
-                        height="50"
-                        style={{ borderRadius: "40px",marginLeft:"30px" }}
-                        className="d-inline-block align-top"
-                        alt="" /> </Navbar.Brand>
+                    <Navbar.Brand> 
+                        <img src={loggedUser.photoURL ? loggedUser.photoURL : userIcon} className="d-inline-block align-top user-img" alt="" />
+                    </Navbar.Brand>
                     <Nav.Link href="#pricing"> <h5>{loggedUser.displayName}</h5> </Nav.Link>
                     {
                         loggedUser.email ?

@@ -30,6 +30,9 @@ function App() {
             <PrivateRoute path="/route/:id">
               <ChooseRoute></ChooseRoute>
             </PrivateRoute>
+            <PrivateRoute path="/route">
+              <ChooseRoute></ChooseRoute>
+            </PrivateRoute>
           </Switch>
         </Router>
       </UserContext.Provider>
