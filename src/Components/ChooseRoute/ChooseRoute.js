@@ -23,8 +23,8 @@ const ChooseRoute = () => {
 
     }
     let i = 1;
-    return (<div className="row container mx-auto mt-5 ">
-        <Card className="col-md-4 ms-5 mb-4 shadow" style={{ width: '18rem', height: "320px" }}>
+    return (<div className="row mx-auto mt-5 ">
+        <Card className="col-md-4 m-5 shadow" style={{ width: '17rem', height: "320px" }}>
             <Card.Img variant="top" />
             <Card.Body>
                 {!route.isSearch ?
@@ -53,7 +53,7 @@ const ChooseRoute = () => {
                 }
             </Card.Body>
         </Card>
-        <Card className="col-md-8 ms-5 p-2 shadow" style={{ width: '67%', height: "600px" }} >
+        <Card className="col-md-8 mt-5 shadow" style={{ height: "600px" }} >
             <GoogleMap></GoogleMap>
         </Card>
     </div>

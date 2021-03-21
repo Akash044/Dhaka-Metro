@@ -17,7 +17,7 @@ const Header = () => {
 
     return (
 
-        <Navbar className="container" bg="light" expand="lg">
+        <Navbar className="container bg-white" expand="lg">
             <Navbar.Brand as={Link} to="/home"><img
                 src={navImg}
                 width="100"

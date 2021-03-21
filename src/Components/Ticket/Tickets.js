@@ -8,8 +8,8 @@ const Tickets = (props) => {
     const {id, type, price, img} = props.ticketInfo;
 
     return (
-        <Card className="col-md-3 col-sm-4 ms-3 mt-5 p-4" style={{ width: '15rem' }}>
-            <Card.Img variant="top" src={img} />
+        <Card className="col-md-3 col-sm-4 ms-3 mt-5 p-4" style={{ width: '15rem',height:"365px" }}>
+            <Card.Img variant="top" className="card-img" src={img} />
             <Card.Body>
                 <h3>{type}</h3>
                 <h5><img className="icon" src={tkIcon} alt=""/> {price}</h5>

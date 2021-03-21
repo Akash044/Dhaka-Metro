@@ -92,7 +92,7 @@ const LoginPage = () => {
     }
 
     return (<div className="p-5 bg">
-        <Card className="mx-auto mt-5 ps-3 shadow" style={{ width: '20rem' }}>
+        <Card className="mx-auto mt-5 shadow" style={{ width: '16rem' }}>
             <Card.Body className="" >
                 <form onSubmit={handleSubmit(!logState ? handleSignUpWithEmailAndPassword : handleSignInWithEmailAndPassword)} className="m-2">
                     {
