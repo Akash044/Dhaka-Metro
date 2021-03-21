@@ -6,4 +6,4 @@ Features :
 3. Also you might find google map.
 4. You can create account and login using google.
 
-Live site link : (https://dhaka-metro-7f59d.web.app)[https://dhaka-metro-7f59d.web.app]
+Live site link : [https://dhaka-metro-7f59d.web.app](https://dhaka-metro-7f59d.web.app)
